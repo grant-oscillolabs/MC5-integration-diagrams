@@ -65,15 +65,86 @@
 
       </pre>
       <div class="descriptions">
-        <span id="A1"><strong>Start Integration Task:</strong> Define the operational context, threat environment, and integration drivers. Establish key stakeholders, intended effectors, and relevant platform constraints.</span>
-        <span id="B2"><strong>Decompose engagement chain using SDDGAS:</strong> Break the weapon engagement process into functional elements: Sense, Decide, Deliver, Guide, Assess, and Sustain. This enables a functional rather than component-based integration strategy.</span>
-        <span id="C3"><strong>Allocate each function to appropriate system:</strong> Assign each SDDGAS function to the most suitable subsystem — e.g. CMS, effector, launcher, sensor suite — based on performance, access, and design intent.</span>
-        <span id="D4"><strong>Define system boundaries and functional ownership:</strong> Clarify which system is responsible for which function. This sets the scope of interface responsibilities and helps identify ownership conflicts or overlaps.</span>
-        <span id="E5"><strong>Identify function handovers across systems:</strong> Map where functions transition between systems (e.g. from CMS to effector). These points require interfaces to enable seamless handoff of data, control, or energy.</span>
-        <span id="F6"><strong>Define interface requirements (EMMI):</strong> Specify what is exchanged at each handover — Energy, Matter, Material, or Information. Define required timing, format, safety conditions, and control logic.</span>
-        <span id="G7"><strong>Validate interfaces for timing, safety, performance:</strong> Ensure each interface can reliably meet mission and safety requirements. Test for determinism, error handling, message sequencing, and fail-safes.</span>
-        <span id="H8"><strong>Inform integration architecture and T&E:</strong> Feed validated interface specifications into the overall system architecture. Align with verification and test plans to confirm integration readiness.</span>
-        <span id="I9"><strong>Iterate or Finalise Integration Design:</strong> Based on testing and operational feedback, refine interface definitions and ownership allocations as needed. Finalise design when all functional and integration criteria are met.</span>
+        <span id="A1">
+          <strong>Start Integration Task:</strong>  
+          Define the operational context, threat environment, and integration drivers. Establish key stakeholders, intended effectors, platform constraints, and safety assurance goals.
+          <br><br>
+          <em>Prompt:</em> What operational need is driving this integration? What are the consequences of poor alignment between platform and effector?
+          <br><br>
+          <em>Example:</em> Integrating a naval strike missile onto a frigate may be driven by a need to extend the ship's engagement envelope beyond visual line-of-sight and match peer capabilities in the region.
+        </span>
+
+        <span id="B2">
+          <strong>Decompose engagement chain using SDDGAS:</strong>  
+          Break the engagement into discrete functional elements to structure the integration around system-level tasks rather than physical components.
+          <br><br>
+          <em>Prompt:</em> Which subsystems contribute to each SDDGAS function? Are any functions duplicated or absent?
+          <br><br>
+          <em>Example:</em> A loitering munition may conduct Sense and Guide autonomously, while Deliver is initiated from a vehicle-based controller and Sustain handled by platform-level power systems.
+        </span>
+
+        <span id="C3">
+          <strong>Allocate each function to appropriate system:</strong>  
+          Assign ownership of each SDDGAS function to a platform system, effector, or operator based on operational suitability and integration feasibility.
+          <br><br>
+          <em>Prompt:</em> Who is best placed to perform each function? What are the implications of assigning Decide to a black-box weapon?
+          <br><br>
+          <em>Example:</em> A Close-In Weapon System (CIWS) like Phalanx may autonomously perform Decide and Deliver internally, requiring only an initial enable command from the CMS.
+        </span>
+
+        <span id="D4">
+          <strong>Define system boundaries and functional ownership:</strong>  
+          Clearly identify which system owns which function, and where the system boundaries lie for control, data, and safety. This supports traceability and interface control.
+          <br><br>
+          <em>Prompt:</em> Are ownership boundaries well documented? Could two systems mistakenly assume they own the same function?
+          <br><br>
+          <em>Example:</em> In a multinational joint platform, both a local fire-control system and a remote operator might issue conflicting Guide commands unless authority is clearly defined.
+        </span>
+
+        <span id="E5">
+          <strong>Identify function handovers across systems:</strong>  
+          Map where one system hands off responsibility for a function to another. These handovers are the critical points requiring robust interfaces.
+          <br><br>
+          <em>Prompt:</em> What data or control must be transferred during the handover? How time-sensitive is the transition?
+          <br><br>
+          <em>Example:</em> In a SAM system, cueing from a surveillance radar (Sense) is handed to the fire-control radar and then to the effector's onboard seeker (Guide).
+        </span>
+
+        <span id="F6">
+          <strong>Define interface requirements (EMMI):</strong>  
+          Specify what is exchanged at each handover: Energy, Matter, Material, or Information. Define protocols, timing, safety constraints, and message standards.
+          <br><br>
+          <em>Prompt:</em> What assumptions are baked into the interface (e.g., data formats, latency)? Who validates them?
+          <br><br>
+          <em>Example:</em> Integrating a foreign torpedo may require defining a secure digital interface for launch control, and a physical interface for tube ejection (Matter).
+        </span>
+
+        <span id="G7">
+          <strong>Validate interfaces for timing, safety, performance:</strong>  
+          Ensure that each interface supports the function it enables — including timing constraints, data accuracy, control sequencing, and fail-safes.
+          <br><br>
+          <em>Prompt:</em> What happens if an interface fails? Are there timing tolerances or race conditions that could degrade performance?
+          <br><br>
+          <em>Example:</em> A missile seeker must receive a target cue update within 200 ms of launch; delays beyond this could cause a failed intercept or fratricide risk.
+        </span>
+
+        <span id="H8">
+          <strong>Inform integration architecture and T&E:</strong>  
+          Feed validated interface and ownership definitions into the integration architecture. Develop test plans that cover all handovers and edge cases.
+          <br><br>
+          <em>Prompt:</em> Does your architecture trace all functions through to test cases? Are off-nominal behaviours addressed?
+          <br><br>
+          <em>Example:</em> For a counter-UAS system, you might define test scenarios that include failed cueing, delayed kill confirmation, or GPS-denied environments.
+        </span>
+
+        <span id="I9">
+          <strong>Iterate or Finalise Integration Design:</strong>  
+          Use feedback from test and operational trials to refine ownership allocations and interface definitions. Finalise the design only when risk is understood and managed.
+          <br><br>
+          <em>Prompt:</em> What did testing reveal about assumptions in your design? What interface changes were required?
+          <br><br>
+          <em>Example:</em> During integration of a new glide munition, it may be discovered that the platform's INS needs synchronisation updates during mid-flight handover, leading to an interface spec revision.
+        </span>
       </div>
   </div>
   <script>
