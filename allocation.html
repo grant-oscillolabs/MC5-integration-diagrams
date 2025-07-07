@@ -65,6 +65,7 @@
 
       </pre>
       <div class="descriptions">
+        <p class="soft-label">Select a step to see its description.</p>
         <span id="A1">
           <strong>Start Integration Task:</strong>  
           Define the operational context, threat environment, and integration drivers. Establish key stakeholders, intended effectors, platform constraints, and safety assurance goals.
@@ -158,11 +159,16 @@
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       justify-content: center;
+      position: relative;
     }
     .descriptions {
       background: #fff;
       border: 1px solid #ccc;
       padding: 1rem;
+      position: fixed;
+      max-width: 320px;
+      left: 360px;
+      top: 6rem;
     }
     .descriptions span {
       display: none; /* Hide descriptions initially */
@@ -171,6 +177,11 @@
       font-weight: bold;
       text-decoration-line: underline;
       text-decoration-style: solid;
+    }
+    .soft-label {
+      font-style: italic;
+      color: #666;
+      margin-bottom: 0.5rem;
     }
     strong {
       color: #333;
