@@ -10,10 +10,28 @@
 <body>
   <h3>Mermaid Diagram</h3>
   <pre class="mermaid">
-  graph TD
-  A[Client] --> B[Load Balancer]
-  B --> C[Server01]
-  B --> D[Server02]
-  </pre>
+    flowchart LR
+        A-->B
+        B-->C
+        C-->D
+        click A callback "Tooltip"
+        click B callback "This is a link"
+        click C callback "Tooltip"
+        click D callback "This is a link"
+</pre>
+<style>
+  .mermaidTooltip {
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 3px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+    color: #333;
+  }
+  body{
+    font-family: "Lato Extended", "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+</style>
 </body>
 </html>
