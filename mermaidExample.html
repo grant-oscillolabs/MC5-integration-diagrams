@@ -4,34 +4,114 @@
   <meta charset="utf-8" />
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11.8.0/+esm';
-    mermaid.initialize({ startOnLoad: true });
+    mermaid.initialize({
+      startOnLoad: true,
+    });
+    document.addEventListener('DOMContentLoaded', () => {
+      mermaid.run({
+        querySelector: '.mermaid',
+        postRenderCallback: (id) => {
+          const container = document.getElementById(id);
+          const descriptionContainer = document.querySelector('.descriptions');
+          const descriptions = descriptionContainer.querySelectorAll('span');
+          descriptions.forEach(desc => {
+            desc.style.display = 'none'; // Hide descriptions initially
+          });
+          
+          container.querySelectorAll('.node').forEach(node => {
+            node.style.cursor = 'pointer';
+            node.addEventListener('click', e => {
+              container.querySelectorAll('.nodeLabel').forEach(label => {
+                label.classList.remove('active');
+              });
+              container.querySelectorAll('.label-container').forEach(labelContainer => {
+                labelContainer.setAttribute('style', 'stroke-width: 1px;');
+              });
+              node.querySelector('.nodeLabel').classList.add('active');
+              node.querySelector('.label-container').setAttribute('style', 'stroke-width: 2px;');
+              const nodeId = node.getAttribute('id');
+              // split nodeID by '-'
+              const parts = nodeId.split('-')[1];
+              const description = descriptionContainer.querySelector(`#${parts}`);
+              if (description) {
+                // set all descriptions to hidden
+                descriptions.forEach(desc => desc.style.display = 'none');
+                // show the clicked node's description
+                description.style.display = 'block';
+              }
+            });
+          });
+        }
+      });
+    });
   </script>
 </head>
 <body>
   <h3>Mermaid Diagram</h3>
-  <pre class="mermaid">
-    flowchart LR
-        A-->B
-        B-->C
-        C-->D
-        click A callback "Tooltip"
-        click B callback "This is a link"
-        click C callback "Tooltip"
-        click D callback "This is a link"
-</pre>
-<style>
-  .mermaidTooltip {
-    background-color: #f9f9f9;
-    border: 1px solid #ccc;
-    padding: 5px;
-    border-radius: 3px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    font-size: 14px;
-    color: #333;
-  }
-  body{
-    font-family: "Lato Extended", "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  }
-</style>
+  <div class="container">
+    <pre class="mermaid">
+      flowchart TD
+        A1["Start Integration Task"]
+        B2["Decompose engagement chain using SDDGAS"]
+        C3["Allocate each function to appropriate system"]
+        D4["Define system boundaries and functional ownership"]
+        E5["Identify function handovers across systems"]
+        F6["Define interface requirements (EMMI)"]
+        G7["Validate interfaces for timing, safety, performance"]
+        H8["Inform integration architecture and T&E"]
+        I9["Iterate or Finalise Integration Design"]
+
+        A1 --> B2 --> C3 --> D4 --> E5 --> F6 --> G7 --> H8 --> I9
+
+      </pre>
+      <div class="descriptions">
+        <span id="A1"><strong>Start Integration Task:</strong> Define the operational context, threat environment, and integration drivers. Establish key stakeholders, intended effectors, and relevant platform constraints.</span>
+        <span id="B2"><strong>Decompose engagement chain using SDDGAS:</strong> Break the weapon engagement process into functional elements: Sense, Decide, Deliver, Guide, Assess, and Sustain. This enables a functional rather than component-based integration strategy.</span>
+        <span id="C3"><strong>Allocate each function to appropriate system:</strong> Assign each SDDGAS function to the most suitable subsystem — e.g. CMS, effector, launcher, sensor suite — based on performance, access, and design intent.</span>
+        <span id="D4"><strong>Define system boundaries and functional ownership:</strong> Clarify which system is responsible for which function. This sets the scope of interface responsibilities and helps identify ownership conflicts or overlaps.</span>
+        <span id="E5"><strong>Identify function handovers across systems:</strong> Map where functions transition between systems (e.g. from CMS to effector). These points require interfaces to enable seamless handoff of data, control, or energy.</span>
+        <span id="F6"><strong>Define interface requirements (EMMI):</strong> Specify what is exchanged at each handover — Energy, Matter, Material, or Information. Define required timing, format, safety conditions, and control logic.</span>
+        <span id="G7"><strong>Validate interfaces for timing, safety, performance:</strong> Ensure each interface can reliably meet mission and safety requirements. Test for determinism, error handling, message sequencing, and fail-safes.</span>
+        <span id="H8"><strong>Inform integration architecture and T&E:</strong> Feed validated interface specifications into the overall system architecture. Align with verification and test plans to confirm integration readiness.</span>
+        <span id="I9"><strong>Iterate or Finalise Integration Design:</strong> Based on testing and operational feedback, refine interface definitions and ownership allocations as needed. Finalise design when all functional and integration criteria are met.</span>
+      </div>
+  </div>
+  <script>
+
+  </script>
+  <style>
+    .container {
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      padding: 1rem;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      justify-content: center;
+    }
+    .descriptions {
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 1rem;
+    }
+    .descriptions span {
+      display: none; /* Hide descriptions initially */
+    }
+    .active {
+      font-weight: bold;
+      text-decoration-line: underline;
+      text-decoration-style: solid;
+    }
+    strong {
+      color: #333;
+      font-weight: bold;
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+    body {
+      max-width: 720px;
+      font-family: "Lato Extended", "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+  </style>
 </body>
 </html>
